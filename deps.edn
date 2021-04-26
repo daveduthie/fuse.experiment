@@ -1,0 +1,22 @@
+{:paths ["src" "resources"]
+ :deps  {org.clojure/clojure          {:mvn/version "1.10.3"}
+         com.github.serceman/jnr-fuse {:mvn/version "0.5.5"}
+         clj-http/clj-http            {:mvn/version "3.12.1"}
+         cheshire/cheshire            {:mvn/version "5.10.0"}}
+ :aliases
+ {:run-x   {:exec-fn    daveduthie.fuse.experiment/main
+            :exec-args  {:dir "/tmp/fuse-experiment4"}}
+  :test    {:extra-paths ["test"]
+            :extra-deps  {org.clojure/test.check {:mvn/version "1.1.0"}}}
+  :runner
+  {:extra-deps {com.cognitect/test-runner
+                {:git/url "https://github.com/cognitect-labs/test-runner"
+                 :sha     "b6b3193fcc42659d7e46ecd1884a228993441182"}}
+   :main-opts  ["-m" "cognitect.test-runner"
+                "-d" "test"]}
+  :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.193"}}
+            :exec-fn      hf.depstar/uberjar
+            :exec-args    {:aot        true
+                           :jar        "fuse.experiment.jar"
+                           :main-class "daveduthie.fuse.experiment"
+                           :sync-pom   true}}}}
